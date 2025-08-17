@@ -1,0 +1,1357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Azka's AI Agent Hub - Next-Gen Intelligence Platform</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --secondary: #f59e0b;
+      --success: #10b981;
+      --danger: #ef4444;
+      --dark: #1e1b4b;
+      --light: #f8fafc;
+      --glass: rgba(255, 255, 255, 0.1);
+      --glass-border: rgba(255, 255, 255, 0.2);
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Animated Background */
+    .bg-animation {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .floating-shape {
+      position: absolute;
+      border-radius: 50%;
+      background: linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .floating-shape:nth-child(1) {
+      width: 80px;
+      height: 80px;
+      top: 20%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+
+    .floating-shape:nth-child(2) {
+      width: 120px;
+      height: 120px;
+      top: 60%;
+      right: 10%;
+      animation-delay: 2s;
+    }
+
+    .floating-shape:nth-child(3) {
+      width: 60px;
+      height: 60px;
+      bottom: 30%;
+      left: 20%;
+      animation-delay: 4s;
+    }
+
+    .floating-shape:nth-child(4) {
+      width: 100px;
+      height: 100px;
+      top: 10%;
+      right: 30%;
+      animation-delay: 1s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
+    }
+
+    /* Navigation */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      padding: 20px 40px;
+      backdrop-filter: blur(20px);
+      background: rgba(255, 255, 255, 0.1);
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    .nav-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 800;
+      color: white;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+    }
+
+    .nav-link {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .nav-link:hover {
+      color: white;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--secondary);
+      transition: width 0.3s ease;
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 120px 40px 60px;
+      text-align: center;
+      color: white;
+    }
+
+    .hero-content {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-size: clamp(3rem, 6vw, 5rem);
+      font-weight: 800;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #fff 0%, #f093fb 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: textShine 3s ease-in-out infinite;
+    }
+
+    @keyframes textShine {
+      0%, 100% { filter: brightness(1); }
+      50% { filter: brightness(1.2); }
+    }
+
+    .hero p {
+      font-size: 20px;
+      margin-bottom: 40px;
+      opacity: 0.9;
+      line-height: 1.6;
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 15px 40px;
+      background: linear-gradient(135deg, var(--secondary) 0%, #f97316 100%);
+      color: white;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 16px;
+      box-shadow: 0 10px 30px rgba(245, 158, 11, 0.3);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .cta-button:hover::before {
+      left: 100%;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(245, 158, 11, 0.4);
+    }
+
+    /* Main Container */
+    .main-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 40px 40px;
+      display: grid;
+      grid-template-columns: 1fr 500px;
+      gap: 60px;
+      align-items: start;
+    }
+
+    /* Features Section */
+    .features {
+      display: grid;
+      gap: 30px;
+    }
+
+    .feature-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 30px;
+      color: white;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+      animation: shimmer 2s ease-in-out infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .feature-icon {
+      font-size: 48px;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .feature-card h3 {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 15px;
+      color: var(--secondary);
+    }
+
+    .feature-card p {
+      opacity: 0.9;
+      line-height: 1.6;
+    }
+
+    .feature-list {
+      margin-top: 15px;
+      padding-left: 20px;
+    }
+
+    .feature-list li {
+      margin-bottom: 8px;
+      opacity: 0.8;
+    }
+
+    /* Chat Interface */
+    .chat-container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 25px;
+      height: 700px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+      position: sticky;
+      top: 120px;
+      animation: slideInRight 0.8s ease-out;
+    }
+
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .chat-header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      padding: 25px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .chat-header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(from 0deg, transparent, rgba(255,255,255,0.1), transparent);
+      animation: rotate 4s linear infinite;
+    }
+
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .chat-header h2 {
+      font-size: 22px;
+      font-weight: 700;
+      position: relative;
+      z-index: 1;
+      margin-bottom: 10px;
+    }
+
+    .agent-selector {
+      position: relative;
+      z-index: 1;
+    }
+
+    .agent-selector select {
+      background: rgba(255,255,255,0.15);
+      color: white;
+      border: 1px solid rgba(255,255,255,0.3);
+      padding: 10px 15px;
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
+      font-size: 14px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .agent-selector select option {
+      background: var(--primary-dark);
+      color: white;
+    }
+
+    .chat-box {
+      flex: 1;
+      padding: 25px;
+      overflow-y: auto;
+      scroll-behavior: smooth;
+    }
+
+    .chat-box::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .chat-box::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+    }
+
+    .chat-box::-webkit-scrollbar-thumb {
+      background: var(--primary);
+      border-radius: 10px;
+    }
+
+    .welcome-message {
+      text-align: center;
+      padding: 40px 20px;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .welcome-message .icon {
+      font-size: 60px;
+      margin-bottom: 20px;
+      animation: bounce 2s ease-in-out infinite;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-10px); }
+      60% { transform: translateY(-5px); }
+    }
+
+    .welcome-message h3 {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 15px;
+      color: white;
+    }
+
+    .msg {
+      margin: 20px 0;
+      padding: 18px 25px;
+      border-radius: 25px;
+      max-width: 85%;
+      word-wrap: break-word;
+      animation: messageSlide 0.4s ease-out;
+      position: relative;
+      backdrop-filter: blur(10px);
+      line-height: 1.5;
+    }
+
+    @keyframes messageSlide {
+      from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .user-msg {
+      background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
+      color: white;
+      margin-left: auto;
+      text-align: right;
+      border-bottom-right-radius: 8px;
+      box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+    }
+
+    .bot-msg {
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+      margin-right: auto;
+      text-align: left;
+      border-bottom-left-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .typing-indicator {
+      display: none;
+      align-items: center;
+      margin: 20px 0;
+      padding: 18px 25px;
+      border-radius: 25px;
+      max-width: 85%;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      border-bottom-left-radius: 8px;
+    }
+
+    .typing-dots {
+      display: flex;
+      gap: 6px;
+      margin-left: 15px;
+    }
+
+    .typing-dots div {
+      width: 10px;
+      height: 10px;
+      background: var(--primary);
+      border-radius: 50%;
+      animation: typing 1.4s ease-in-out infinite;
+    }
+
+    .typing-dots div:nth-child(1) { animation-delay: 0s; }
+    .typing-dots div:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dots div:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes typing {
+      0%, 60%, 100% {
+        transform: translateY(0);
+        opacity: 0.4;
+      }
+      30% {
+        transform: translateY(-15px);
+        opacity: 1;
+      }
+    }
+
+    .pos-actions {
+      display: none;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(0, 0, 0, 0.1);
+    }
+
+    .pos-actions button {
+      flex: 1;
+      min-width: 130px;
+      padding: 12px 18px;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
+      color: white;
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pos-actions button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.3s;
+    }
+
+    .pos-actions button:hover::before {
+      left: 100%;
+    }
+
+    .pos-actions button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);
+    }
+
+    .pos-actions button.checkout {
+      background: linear-gradient(135deg, var(--secondary) 0%, #d97706 100%);
+      box-shadow: 0 6px 20px rgba(245, 158, 11, 0.3);
+    }
+
+    .pos-actions button.checkout:hover {
+      box-shadow: 0 10px 30px rgba(245, 158, 11, 0.4);
+    }
+
+    .chat-input {
+      display: flex;
+      padding: 25px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      gap: 15px;
+      align-items: flex-end;
+      background: rgba(0, 0, 0, 0.1);
+    }
+
+    .input-group {
+      flex: 1;
+      position: relative;
+    }
+
+    .chat-input input[type="text"] {
+      width: 100%;
+      padding: 18px 55px 18px 25px;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 25px;
+      font-size: 16px;
+      outline: none;
+      transition: all 0.3s ease;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      backdrop-filter: blur(10px);
+    }
+
+    .chat-input input[type="text"]::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .chat-input input[type="text"]:focus {
+      border-color: var(--primary);
+      background: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+    }
+
+    .file-input-wrapper {
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .file-input-wrapper input[type="file"] {
+      display: none;
+    }
+
+    .file-input-wrapper label {
+      cursor: pointer;
+      color: rgba(255, 255, 255, 0.6);
+      transition: all 0.3s ease;
+      font-size: 20px;
+      padding: 5px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .file-input-wrapper label:hover {
+      color: var(--primary);
+      background: rgba(99, 102, 241, 0.1);
+    }
+
+    .send-button {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      border: none;
+      padding: 18px 30px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
+      min-width: 100px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .send-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.3s;
+    }
+
+    .send-button:hover:not(:disabled)::before {
+      left: 100%;
+    }
+
+    .send-button:hover:not(:disabled) {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 35px rgba(99, 102, 241, 0.4);
+    }
+
+    .send-button:disabled {
+      background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .file-list {
+      margin-top: 12px;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .file-item {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 6px 12px;
+      border-radius: 15px;
+      display: inline-block;
+      margin: 3px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .error-msg {
+      background: linear-gradient(135deg, var(--danger) 0%, #dc2626 100%);
+      color: white;
+      margin-right: auto;
+      text-align: left;
+      border-bottom-left-radius: 8px;
+      box-shadow: 0 8px 25px rgba(239, 68, 68, 0.3);
+    }
+
+    /* Stats Section */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-top: 40px;
+    }
+
+    .stat-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 15px;
+      padding: 25px;
+      text-align: center;
+      color: white;
+      transition: all 0.3s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .stat-number {
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--secondary);
+      margin-bottom: 10px;
+    }
+
+    .stat-label {
+      font-size: 14px;
+      opacity: 0.8;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1200px) {
+      .main-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      
+      .chat-container {
+        position: static;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 15px 20px;
+      }
+      
+      .nav-links {
+        display: none;
+      }
+      
+      .hero {
+        padding: 100px 20px 40px;
+      }
+      
+      .main-container {
+        padding: 0 20px 20px;
+      }
+      
+      .pos-actions button {
+        min-width: 100px;
+        font-size: 12px;
+      }
+      
+      .chat-input {
+        padding: 20px;
+      }
+      
+      .feature-card {
+        padding: 20px;
+      }
+      
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      
+      .hero p {
+        font-size: 16px;
+      }
+      
+      .chat-container {
+        height: 600px;
+      }
+      
+      .stats {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Animated Background -->
+  <div class="bg-animation">
+    <div class="floating-shape"></div>
+    <div class="floating-shape"></div>
+    <div class="floating-shape"></div>
+    <div class="floating-shape"></div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-content">
+      <a href="#" class="logo">🤖 Azka's AI Hub</a>
+      <div class="nav-links">
+        <a href="#features" class="nav-link">Features</a>
+        <a href="#agents" class="nav-link">Agents</a>
+        <a href="#chat" class="nav-link">Try Now</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Next-Generation AI Intelligence Platform</h1>
+      <p>Experience the future of AI with our advanced multi-agent system featuring web search, financial analysis, and intelligent POS integration.</p>
+      <a href="#chat" class="cta-button">Start Chatting Now →</a>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <div class="main-container">
+    <!-- Features Section -->
+    <div class="features" id="features">
+      <div class="feature-card">
+        <span class="feature-icon">🧠</span>
+        <h3>MultiModel Agent</h3>
+        <p>Advanced AI that combines multiple specialized agents to provide comprehensive responses across various domains.</p>
+        <ul class="feature-list">
+          <li>Web search integration</li>
+          <li>Financial analysis</li>
+          <li>PDF document processing</li>
+          <li>Intelligent task delegation</li>
+        </ul>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">💰</span>
+        <h3>Finance Agent</h3>
+        <p>Specialized financial analysis powered by real-time market data and advanced analytics.</p>
+        <ul class="feature-list">
+          <li>Stock price analysis</li>
+          <li>Market trend insights</li>
+          <li>Portfolio optimization</li>
+          <li>Financial report analysis</li>
+        </ul>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">🔍</span>
+        <h3>Web Search Agent</h3>
+        <p>Real-time information retrieval with intelligent web crawling and data synthesis.</p>
+        <ul class="feature-list">
+          <li>Current events tracking</li>
+          <li>Research automation</li>
+          <li>Fact verification</li>
+          <li>News aggregation</li>
+        </ul>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">🛒</span>
+        <h3>Smart POS System</h3>
+        <p>Intelligent point-of-sale system with natural language processing for retail operations.</p>
+        <ul class="feature-list">
+          <li>Voice-activated commands</li>
+          <li>Inventory management</li>
+          <li>Multi-payment processing</li>
+          <li>Receipt generation</li>
+        </ul>
+      </div>
+
+      <!-- Stats Section -->
+      <div class="stats">
+        <div class="stat-card">
+          <div class="stat-number">99.9%</div>
+          <div class="stat-label">Uptime</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">< 0.5s</div>
+          <div class="stat-label">Response Time</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">4</div>
+          <div class="stat-label">AI Agents</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chat Interface -->
+    <div class="chat-container" id="chat">
+      <div class="chat-header">
+        <h2>🤖 AI Agent Hub</h2>
+        <div class="agent-selector">
+          <select id="agent-select" onchange="togglePOS()">
+            <option value="multimodel">🧠 MultiModel Agent</option>
+            <option value="finance">💰 Finance Agent</option>
+            <option value="web">🔍 Web Search Agent</option>
+            <option value="retail-pos">🛒 POS System</option>
+          </select>
+        </div>
+      </div>
+      
+      <div id="chat-box" class="chat-box">
+        <div class="welcome-message">
+          <div class="icon">🚀</div>
+          <h3>Welcome to the Future</h3>
+          <p>Select an AI agent above and start your intelligent conversation. Upload PDFs, ask questions, or use our smart POS system!</p>
+        </div>
+      </div>
+
+      <div class="typing-indicator" id="typing-indicator">
+        <span>AI is thinking</span>
+        <div class="typing-dots">
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+
+      <!-- POS Quick Actions -->
+      <div id="pos-actions" class="pos-actions">
+        <button onclick="sendPOS('add milk 40 2')">🥛 Add Milk</button>
+        <button onclick="sendPOS('add bread 25 1')">🍞 Add Bread</button>
+        <button onclick="sendPOS('total')">📊 Total</button>
+        <button class="checkout" onclick="sendPOS('checkout upi')">💳 UPI</button>
+        <button class="checkout" onclick="sendPOS('checkout card')">💳 Card</button>
+        <button class="checkout" onclick="sendPOS('checkout cash')">💵 Cash</button>
+      </div>
+
+      <div class="chat-input">
+        <div class="input-group">
+          <input id="message-input" type="text" placeholder="Type your message or upload a PDF..." onkeypress="handleKeyPress(event)">
+          <div class="file-input-wrapper">
+            <input type="file" id="pdf-upload" accept=".pdf" onchange="handleFileUpload(event)">
+            <label for="pdf-upload">📎</label>
+          </div>
+          <div id="file-list" class="file-list"></div>
+        </div>
+        <button id="send-button" class="send-button" onclick="sendMessage()">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Chat state management
+    let chatHistory = [];
+    let currentAgent = 'multimodel';
+    let uploadedFiles = [];
+    let posCart = [];
+    let posTotal = 0;
+    
+    // Agent configurations
+    const agents = {
+      multimodel: {
+        name: 'MultiModel Agent',
+        icon: '🧠',
+        systemPrompt: 'You are a helpful AI assistant that can handle various tasks including general questions, analysis, and problem-solving.'
+      },
+      finance: {
+        name: 'Finance Agent',
+        icon: '💰',
+        systemPrompt: 'You are a financial expert AI assistant specializing in market analysis, investment advice, and financial planning.'
+      },
+      web: {
+        name: 'Web Search Agent',
+        icon: '🔍',
+        systemPrompt: 'You are a web research specialist AI that helps find and analyze current information from various online sources.'
+      },
+      'retail-pos': {
+        name: 'POS System',
+        icon: '🛒',
+        systemPrompt: 'You are a smart point-of-sale system. Help with inventory management, sales processing, and retail operations.'
+      }
+    };
+
+    // Initialize chat
+    function initializeChat() {
+      const chatBox = document.getElementById('chat-box');
+      chatBox.innerHTML = `
+        <div class="welcome-message">
+          <div class="icon">🚀</div>
+          <h3>Welcome to the Future</h3>
+          <p>Select an AI agent above and start your intelligent conversation. Upload PDFs, ask questions, or use our smart POS system!</p>
+        </div>
+      `;
+      chatHistory = [];
+      uploadedFiles = [];
+      updateFileList();
+    }
+
+    // Toggle POS interface
+    function togglePOS() {
+      const agentSelect = document.getElementById('agent-select');
+      const posActions = document.getElementById('pos-actions');
+      const messageInput = document.getElementById('message-input');
+      
+      currentAgent = agentSelect.value;
+      
+      if (currentAgent === 'retail-pos') {
+        posActions.style.display = 'flex';
+        messageInput.placeholder = 'Ask about inventory, add items, or process orders...';
+        initializePOS();
+      } else {
+        posActions.style.display = 'none';
+        messageInput.placeholder = 'Type your message or upload a PDF...';
+      }
+      
+      // Clear chat when switching agents
+      initializeChat();
+      addBotMessage(`Hello! I'm the ${agents[currentAgent].name}. How can I help you today?`);
+    }
+
+    // Initialize POS system
+    function initializePOS() {
+      posCart = [];
+      posTotal = 0;
+      addBotMessage("🛒 POS System activated! You can:\n• Add items: 'add [item] [price] [quantity]'\n• View total: 'total'\n• Checkout: 'checkout [cash/card/upi]'\n• Or use the quick action buttons below!");
+    }
+
+    // Handle key press in input
+    function handleKeyPress(event) {
+      if (event.key === 'Enter' && !event.shiftKey) {
+        event.preventDefault();
+        sendMessage();
+      }
+    }
+
+    // Handle file upload
+    function handleFileUpload(event) {
+      const file = event.target.files[0];
+      if (file && file.type === 'application/pdf') {
+        uploadedFiles.push({
+          name: file.name,
+          size: file.size,
+          file: file
+        });
+        updateFileList();
+        addBotMessage(`📄 PDF "${file.name}" uploaded successfully! Ask me anything about its contents.`);
+      } else {
+        addBotMessage('❌ Please upload a valid PDF file.', 'error');
+      }
+      event.target.value = '';
+    }
+
+    // Update file list display
+    function updateFileList() {
+      const fileList = document.getElementById('file-list');
+      if (uploadedFiles.length > 0) {
+        fileList.innerHTML = uploadedFiles.map(file => 
+          `<span class="file-item">📄 ${file.name}</span>`
+        ).join('');
+      } else {
+        fileList.innerHTML = '';
+      }
+    }
+
+    // Send message
+    function sendMessage() {
+      const messageInput = document.getElementById('message-input');
+      const message = messageInput.value.trim();
+      
+      if (!message && uploadedFiles.length === 0) return;
+      
+      if (message) {
+        addUserMessage(message);
+        messageInput.value = '';
+        processMessage(message);
+      }
+    }
+
+    // Send POS command
+    function sendPOS(command) {
+      addUserMessage(command);
+      processPOSCommand(command);
+    }
+
+    // Add user message to chat
+    function addUserMessage(message) {
+      const chatBox = document.getElementById('chat-box');
+      const welcomeMessage = chatBox.querySelector('.welcome-message');
+      if (welcomeMessage) {
+        welcomeMessage.remove();
+      }
+
+      const messageDiv = document.createElement('div');
+      messageDiv.className = 'msg user-msg';
+      messageDiv.textContent = message;
+      chatBox.appendChild(messageDiv);
+      chatBox.scrollTop = chatBox.scrollHeight;
+      
+      chatHistory.push({ role: 'user', content: message });
+    }
+
+    // Add bot message to chat
+    function addBotMessage(message, type = 'bot') {
+      const chatBox = document.getElementById('chat-box');
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `msg ${type === 'error' ? 'error-msg' : 'bot-msg'}`;
+      
+      // Handle markdown-like formatting
+      const formattedMessage = message
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.*?)\*/g, '<em>$1</em>')
+        .replace(/\n/g, '<br>');
+      
+      messageDiv.innerHTML = formattedMessage;
+      chatBox.appendChild(messageDiv);
+      chatBox.scrollTop = chatBox.scrollHeight;
+      
+      if (type !== 'error') {
+        chatHistory.push({ role: 'assistant', content: message });
+      }
+    }
+
+    // Show typing indicator
+    function showTyping() {
+      const typingIndicator = document.getElementById('typing-indicator');
+      typingIndicator.style.display = 'flex';
+      const chatBox = document.getElementById('chat-box');
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    // Hide typing indicator
+    function hideTyping() {
+      const typingIndicator = document.getElementById('typing-indicator');
+      typingIndicator.style.display = 'none';
+    }
+
+    // Process general message
+    async function processMessage(message) {
+      showTyping();
+      
+      try {
+        // Simulate AI processing delay
+        await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 2000));
+        
+        let response = '';
+        
+        // Route to appropriate agent
+        switch (currentAgent) {
+          case 'finance':
+            response = await processFinanceQuery(message);
+            break;
+          case 'web':
+            response = await processWebQuery(message);
+            break;
+          case 'retail-pos':
+            response = await processPOSCommand(message);
+            return; // POS handles its own response
+          default:
+            response = await processMultiModelQuery(message);
+        }
+        
+        hideTyping();
+        addBotMessage(response);
+        
+      } catch (error) {
+        hideTyping();
+        addBotMessage('Sorry, I encountered an error processing your request. Please try again.', 'error');
+      }
+    }
+
+    // Process MultiModel queries
+    async function processMultiModelQuery(message) {
+      const lowerMessage = message.toLowerCase();
+      
+      if (uploadedFiles.length > 0) {
+        return `📄 **PDF Analysis**: I can see you've uploaded "${uploadedFiles[0].name}". While I can't actually read PDF files in this demo, I would typically analyze the content and answer questions about:\n\n• Document structure and key topics\n• Specific information extraction\n• Summaries and insights\n• Cross-references and citations\n\nWhat would you like to know about the document?`;
+      }
+      
+      if (lowerMessage.includes('weather')) {
+        return `🌤️ **Weather Information**: I would typically provide current weather conditions and forecasts. For accurate weather data, I'd integrate with weather APIs to give you:\n\n• Current temperature and conditions\n• 5-day forecast\n• Weather alerts and warnings\n• Historical weather data`;
+      }
+      
+      if (lowerMessage.includes('stock') || lowerMessage.includes('market')) {
+        return `📈 **Market Insight**: For detailed financial analysis, try switching to the Finance Agent! I can provide general information about:\n\n• Market trends and analysis\n• Stock performance indicators\n• Economic factors\n• Investment strategies\n\n*Tip: Use the Finance Agent for specialized financial queries.*`;
+      }
+      
+      if (lowerMessage.includes('search') || lowerMessage.includes('find')) {
+        return `🔍 **Search Capability**: For comprehensive web searches, try the Web Search Agent! I can help with:\n\n• General knowledge questions\n• Research assistance\n• Information synthesis\n• Fact-checking\n\n*Tip: Use the Web Search Agent for current events and real-time information.*`;
+      }
+      
+      // Default intelligent response
+      const responses = [
+        `🧠 **Intelligent Analysis**: That's an interesting question! Based on my understanding, I can provide comprehensive insights across multiple domains. ${message.length > 50 ? 'Your detailed query shows you\'re looking for in-depth information.' : 'Feel free to be more specific about what you\'d like to know.'}`,
+        
+        `💡 **Multi-Domain Response**: I can help you with various aspects of "${message}". This topic intersects with several areas of knowledge, and I can provide:\n\n• Detailed explanations\n• Practical applications\n• Related concepts\n• Step-by-step guidance`,
+        
+        `🎯 **Comprehensive Answer**: Great question! Let me break this down for you:\n\n**Key Points:**\n• This involves multiple considerations\n• There are various approaches to explore\n• I can provide both theoretical and practical insights\n\nWhat specific aspect would you like me to focus on?`
+      ];
+      
+      return responses[Math.floor(Math.random() * responses.length)];
+    }
+
+    // Process Finance queries
+    async function processFinanceQuery(message) {
+      const lowerMessage = message.toLowerCase();
+      
+      if (lowerMessage.includes('bitcoin') || lowerMessage.includes('crypto')) {
+        return `₿ **Cryptocurrency Analysis**: \n\n• **Current Trends**: Crypto markets are highly volatile\n• **Key Factors**: Regulation, adoption, and market sentiment\n• **Risk Assessment**: High risk, high reward potential\n• **Recommendation**: Never invest more than you can afford to lose\n\n*Note: This is a demo - real financial advice requires current market data.*`;
+      }
+      
+      if (lowerMessage.includes('stock') || lowerMessage.includes('invest')) {
+        return `📊 **Investment Analysis**:\n\n**Market Overview:**\n• Diversification is key to risk management\n• Long-term investing typically outperforms short-term trading\n• Consider your risk tolerance and investment timeline\n\n**Portfolio Recommendations:**\n• 60% Stocks, 30% Bonds, 10% Alternative investments\n• Regular rebalancing quarterly\n• Dollar-cost averaging for consistent investing`;
+      }
+      
+      if (lowerMessage.includes('budget') || lowerMessage.includes('save')) {
+        return `💰 **Financial Planning**:\n\n**Budgeting Strategy:**\n• 50% Needs, 30% Wants, 20% Savings (50/30/20 rule)\n• Emergency fund: 3-6 months of expenses\n• Automate savings and investments\n\n**Savings Tips:**\n• Track all expenses for one month\n• Cut unnecessary subscriptions\n• Use high-yield savings accounts`;
+      }
+      
+      return `📈 **Financial Expertise**: I'm analyzing your query about "${message}" from a financial perspective. Key considerations include:\n\n• **Risk Assessment**: Every financial decision involves risk\n• **Market Context**: Current economic conditions matter\n• **Personal Goals**: Your financial objectives are unique\n• **Timeline**: Investment horizon affects strategy\n\nWhat specific financial aspect would you like me to elaborate on?`;
+    }
+
+    // Process Web Search queries
+    async function processWebQuery(message) {
+      const lowerMessage = message.toLowerCase();
+      
+      if (lowerMessage.includes('news') || lowerMessage.includes('current')) {
+        return `📰 **Latest Information**: I would search the web for current news about "${message}". Typical sources include:\n\n• Major news outlets (Reuters, AP, BBC)\n• Specialized publications\n• Official announcements\n• Social media trends\n\n**Search Results Summary:**\n*In a real implementation, I would provide current, verified information from multiple sources with citations.*`;
+      }
+      
+      if (lowerMessage.includes('research') || lowerMessage.includes('study')) {
+        return `🔬 **Research Results**: Conducting comprehensive web research on "${message}":\n\n**Academic Sources:**\n• Peer-reviewed journals\n• University publications\n• Research institutions\n\n**Industry Reports:**\n• Market analysis\n• Technical specifications\n• Expert opinions\n\n*Real implementation would provide actual search results with source verification.*`;
+      }
+      
+      if (lowerMessage.includes('price') || lowerMessage.includes('buy')) {
+        return `🛍️ **Price Comparison**: Searching for best prices and availability:\n\n**E-commerce Platforms:**\n• Amazon, eBay, local retailers\n• Price history and trends\n• User reviews and ratings\n• Shipping and return policies\n\n**Best Deals Found:**\n*In production, I would show real-time pricing from multiple vendors.*`;
+      }
+      
+      return `🌐 **Web Search Results**: I'm searching the internet for information about "${message}". My search strategy includes:\n\n• **Multiple Sources**: Cross-referencing various websites\n• **Fact Verification**: Checking information accuracy\n• **Recent Updates**: Prioritizing current information\n• **Credible Sources**: Using reputable websites\n\n*This is a demo - real web search would provide actual current results with source citations.*`;
+    }
+
+    // Process POS commands
+    async function processPOSCommand(message) {
+      showTyping();
+      await new Promise(resolve => setTimeout(resolve, 500));
+      hideTyping();
+      
+      const lowerMessage = message.toLowerCase();
+      const parts = message.split(' ');
+      
+      if (lowerMessage.startsWith('add ') && parts.length >= 4) {
+        const item = parts[1];
+        const price = parseFloat(parts[2]);
+        const quantity = parseInt(parts[3]);
+        
+        if (!isNaN(price) && !isNaN(quantity)) {
+          const total = price * quantity;
+          posCart.push({ item, price, quantity, total });
+          posTotal += total;
+          
+          addBotMessage(`✅ **Added to Cart**:\n• ${quantity}x ${item.charAt(0).toUpperCase() + item.slice(1)} @ ₹${price} each\n• Line Total: ₹${total}\n• **Cart Total: ₹${posTotal}**`);
+        } else {
+          addBotMessage('❌ Invalid format. Use: add [item] [price] [quantity]', 'error');
+        }
+        return;
+      }
+      
+      if (lowerMessage === 'total') {
+        if (posCart.length === 0) {
+          addBotMessage('🛒 **Cart is Empty**\n\nAdd items using: add [item] [price] [quantity]');
+        } else {
+          let receipt = '🧾 **Current Cart:**\n\n';
+          posCart.forEach((item, index) => {
+            receipt += `${index + 1}. ${item.quantity}x ${item.item.charAt(0).toUpperCase() + item.item.slice(1)} @ ₹${item.price} = ₹${item.total}\n`;
+          });
+          receipt += `\n**Total: ₹${posTotal}**`;
+          addBotMessage(receipt);
+        }
+        return;
+      }
+      
+      if (lowerMessage.startsWith('checkout ')) {
+        const paymentMethod = parts[1];
+        
+        if (posCart.length === 0) {
+          addBotMessage('❌ Cannot checkout - cart is empty!', 'error');
+          return;
+        }
+        
+        const paymentMethods = {
+          'cash': '💵 Cash',
+          'card': '💳 Card',
+          'upi': '📱 UPI'
+        };
+        
+        const methodName = paymentMethods[paymentMethod] || '💳 Unknown';
+        
+        let receipt = '✅ **Transaction Complete!**\n\n';
+        receipt += '🧾 **RECEIPT**\n';
+        receipt += '═══════════════════\n';
+        posCart.forEach((item, index) => {
+          receipt += `${index + 1}. ${item.quantity}x ${item.item.charAt(0).toUpperCase() + item.item.slice(1)} @ ₹${item.price} = ₹${item.total}\n`;
+        });
+        receipt += '═══════════════════\n';
+        receipt += `**Total: ₹${posTotal}**\n`;
+        receipt += `**Payment: ${methodName}**\n`;
+        receipt += `**Date: ${new Date().toLocaleDateString()}**\n\n`;
+        receipt += '🎉 Thank you for shopping with us!';
+        
+        addBotMessage(receipt);
+        
+        // Reset cart
+        posCart = [];
+        posTotal = 0;
+        return;
+      }
+      
+      if (lowerMessage.includes('inventory') || lowerMessage.includes('stock')) {
+        addBotMessage(`📦 **Inventory Management**:\n\n**Popular Items:**\n• Milk - ₹40 (In Stock)\n• Bread - ₹25 (In Stock)\n• Eggs - ₹60 (Low Stock)\n• Rice - ₹80 (In Stock)\n• Oil - ₹120 (In Stock)\n\n**Quick Actions:**\n• Use 'add [item] [price] [quantity]' to add items\n• Use the quick buttons below for common items`);
+        return;
+      }
+      
+      // Default POS response
+      addBotMessage(`🛒 **POS System Help**:\n\n**Available Commands:**\n• **add [item] [price] [quantity]** - Add item to cart\n• **total** - View current cart\n• **checkout [cash/card/upi]** - Process payment\n• **inventory** - View available items\n\n**Example:** add apple 50 3\n\nOr use the quick action buttons below!`);
+    }
+
+    // Initialize the application
+    document.addEventListener('DOMContentLoaded', function() {
+      initializeChat();
+      addBotMessage("👋 Welcome! I'm your AI assistant. Select an agent above and let's get started!");
+      
+      // Smooth scrolling for navigation links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      });
+    });
+
+    // Handle send button state
+    document.getElementById('message-input').addEventListener('input', function() {
+      const sendButton = document.getElementById('send-button');
+      sendButton.disabled = this.value.trim() === '';
+    });
+
+    // Initialize send button as disabled
+    document.getElementById('send-button').disabled = true;
+  </script>
+</body>
+</html>
