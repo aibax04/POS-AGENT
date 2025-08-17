@@ -1,2 +1,13 @@
 fastapi
 groq
+agno
+python-dotenv
+yfinance
+packaging
+duckduckgo-search
+fastapi
+uvicorn
+groq
+PyPDF2
+phidata
+python-multipart
