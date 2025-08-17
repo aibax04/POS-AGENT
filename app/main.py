@@ -21,6 +21,33 @@ import re
 # -------------------------
 app = FastAPI(title="Azka's AI Agent API", version="1.0.0")
 
+
+from flask import Flask, render_template
+
+
+
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
+app = FastAPI()   # ❌ Do NOT use Flask(), use FastAPI()
+
+# Add middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # or specify ["http://localhost:3000"] etc
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+@app.get("/")
+def root():
+    return {"message": "Azka's AI Agent API is running! 🤖"}
+
+
+
+
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
