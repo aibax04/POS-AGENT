@@ -40,9 +40,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/")
+@app.get("/api")
 def root():
-    return {"message": "Azka's AI Agent API is running! 🤖"}
+    return {"message": "FastAPI backend on Vercel is running 🚀"}
 
 
 
