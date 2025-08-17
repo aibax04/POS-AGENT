@@ -29,7 +29,7 @@ from flask import Flask, render_template
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI()   # ❌ Do NOT use Flask(), use FastAPI()
+  # ❌ Do NOT use Flask(), use FastAPI()
 
 # Add middleware
 app.add_middleware(
@@ -434,3 +434,10 @@ if __name__ == "__main__":
     print("📊 Available agents: MultiModel, Finance, Web Search, POS System")
     print("🔗 API docs will be available at: http://127.0.0.1:8000/docs")
     uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)
+
+from fastapi.responses import FileResponse
+import os
+
+@app.get("/")
+def read_index():
+    return FileResponse(os.path.join(os.path.dirname(__file__), "index.html"))
