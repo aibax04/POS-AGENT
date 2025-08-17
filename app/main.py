@@ -40,7 +40,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/api")
+@app.get("/app")
 def root():
     return {"message": "FastAPI backend on Vercel is running 🚀"}
 
