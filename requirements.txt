@@ -12,3 +12,4 @@ PyPDF2
 phidata
 python-multipart
 patch
+flask
